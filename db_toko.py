@@ -22,7 +22,7 @@ class transaksi(data):
         self.executeQuery(self.query)
 
     def getDataTransaksi(self):
-        self.query = "SELECT id_transaksi, tanggal , id_barang, jumlah_pembelian, total_pembayaran FROM transaksi"
+        self.query = "SELECT id_transaksi, tanggal , id_barang, jumlah_pembelian, total_pembayaran FROM transaksi ORDER BY id_transaksi"
         print('self.query : ', self.query)
         result = self.executeQuery(self.query, True)
         return result
