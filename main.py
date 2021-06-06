@@ -1,10 +1,10 @@
-import noname
+import GUI
 import wx
 import wx.grid
 
-class Daftar (noname.Daftar):
+class Daftar (GUI.Daftar):
     def __init__(self, parent):
-        noname.Daftar.__init__(self,parent)
+        GUI.Daftar.__init__(self,parent)
         user = []
         password = []
         nama_toko = []
@@ -26,9 +26,9 @@ class Daftar (noname.Daftar):
         framemasuk.Show()
         framedaftar.Hide()
 
-class Masuk (noname.Masuk):
+class Masuk (GUI.Masuk):
     def __init__(self, parent):
-        noname.Masuk.__init__(self,parent)
+        GUI.Masuk.__init__(self,parent)
         self.user = []
         self.password = []
     def simpan_btn_onbuttonclick( self, event ):
@@ -64,6 +64,6 @@ app = wx.App()
 framedaftar = Daftar(parent=None)
 framedaftar.Show()
 framemasuk = Masuk(parent=None)
-framedashboard = noname.Dashboard(parent=None)
+framedashboard = GUI.Dashboard(parent=None)
 
 app.MainLoop()
