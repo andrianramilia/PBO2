@@ -1,9 +1,8 @@
-import mysql.connector
 import sqlite3
 
 class data:
     def __init__(self):
-        self.con = sqlite3.connect("db_toko")
+        self.con = sqlite3.connect("toko.db")
         self.cursor = self.con.cursor()
 
     def executeQuery(self, query, retVal = False):
@@ -16,26 +15,26 @@ class data:
 class transaksi(data):
 
     def UpdateDataTransaksi(self, id_transaksi, tanggal , id_barang, jumlah_pembelian, total_pembayaran):
-        self.query = "UPDATE transaksi SET id_transaksi= ?, tanggal = ?, id_barang = ?, jumlah_pembelian = ?, total_pembayaran = ? where id = id_transaksi"
+        self.query = "UPDATE transaksi SET id_transaksi= ?, tanggal_transaksi = ?, id_barang = ?, jumlah_pembelian = ?, total_pembayaran = ? where id = id_transaksi"
         self.query = self.query % (id_transaksi, tanggal , id_barang, jumlah_pembelian, total_pembayaran)
         print('self.query : ', self.query)
         self.executeQuery(self.query)
 
     def getDataTransaksi(self):
-        self.query = "SELECT id_transaksi, tanggal , id_barang, jumlah_pembelian, total_pembayaran FROM transaksi ORDER BY id_transaksi"
+        self.query = "SELECT id_transaksi, tanggal_transaksi , id_barang, jumlah_pembelian, total_pembayaran FROM transaksi ORDER BY id_transaksi"
         print('self.query : ', self.query)
         result = self.executeQuery(self.query, True)
         return result
 
-class stok(data):
+class barang(data):
     
-    def UpdateDataStok(self, id_barang, nama_barang, jumlah_stok, harga):
+    def UpdateDataBarang(self, id_barang, nama_barang, jumlah_stok, harga):
         self.query = "UPDATE barang SET id_barang= ?, nama_barang = ?, jumlah_stok = ?, harga = ?, where id = id_barang"
         self.query = self.query % (id_barang, nama_barang , jumlah_stok, harga)
         self.executeQuery(self.query)
 
     def getDataBarang(self):
-        self.query = "SELECT id_barang, nama_barang, jumlah_stok, harga"
+        self.query = "SELECT id_barang, nama_barang, jumlah_stok, harga FROM barang"
         print('self.query : ', self.query)
         result = self.executeQuery(self.query, True)
         return result
@@ -46,8 +45,13 @@ class akun(data):
         self.query = self.query % (username, password, nama_toko)
         self.executeQuery(self.query)
 
-    def getDataBarang(self):
-        self.query = "SELECT  username, password, nama_toko"
+    def InsertDataAkun(self, username, password, nama_toko):
+        self.query = "Insert INTO akun SET username= ?, password = ?, nama_toko = ? "
+        self.query = self.query % (username, password, nama_toko)
+        self.executeQuery(self.query)
+
+    def getDataAkun(self):
+        self.query = "SELECT username, password, nama_toko FROM akun"
         print('self.query : ', self.query)
         result = self.executeQuery(self.query, True)
         return result

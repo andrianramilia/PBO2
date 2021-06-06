@@ -280,43 +280,43 @@ class Dashboard ( wx.Frame ):
 		self.m_panel33 = wx.Panel( self.m_notebook1, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer33 = wx.BoxSizer( wx.VERTICAL )
 
-		self.m_grid4 = wx.grid.Grid( self.m_panel33, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.Transaksi = wx.grid.Grid( self.m_panel33, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
 
 		# Grid
-		self.m_grid4.CreateGrid( 0, 7 )
-		self.m_grid4.EnableEditing( True )
-		self.m_grid4.EnableGridLines( True )
-		self.m_grid4.EnableDragGridSize( False )
-		self.m_grid4.SetMargins( 0, 0 )
+		self.Transaksi.CreateGrid( 0, 7 )
+		self.Transaksi.EnableEditing( True )
+		self.Transaksi.EnableGridLines( True )
+		self.Transaksi.EnableDragGridSize( False )
+		self.Transaksi.SetMargins( 0, 0 )
 
 		# Columns
-		self.m_grid4.SetColSize( 0, 100 )
-		self.m_grid4.SetColSize( 1, 150 )
-		self.m_grid4.SetColSize( 2, 100 )
-		self.m_grid4.SetColSize( 3, 100 )
-		self.m_grid4.SetColSize( 4, 100 )
-		self.m_grid4.EnableDragColMove( False )
-		self.m_grid4.EnableDragColSize( True )
-		self.m_grid4.SetColLabelSize( 30 )
-		self.m_grid4.SetColLabelValue( 0, u"ID Transaksi" )
-		self.m_grid4.SetColLabelValue( 1, u"Tanggal Transaksi" )
-		self.m_grid4.SetColLabelValue( 2, u"ID Barang" )
-		self.m_grid4.SetColLabelValue( 3, u"Jumlah" )
-		self.m_grid4.SetColLabelValue( 4, u"Total" )
-		self.m_grid4.SetColLabelValue( 5, u"Edit" )
-		self.m_grid4.SetColLabelValue( 6, u"Hapus" )
-		self.m_grid4.SetColLabelAlignment( wx.ALIGN_CENTER, wx.ALIGN_CENTER )
+		self.Transaksi.SetColSize( 0, 100 )
+		self.Transaksi.SetColSize( 1, 150 )
+		self.Transaksi.SetColSize( 2, 100 )
+		self.Transaksi.SetColSize( 3, 100 )
+		self.Transaksi.SetColSize( 4, 100 )
+		self.Transaksi.EnableDragColMove( False )
+		self.Transaksi.EnableDragColSize( True )
+		self.Transaksi.SetColLabelSize( 30 )
+		self.Transaksi.SetColLabelValue( 0, u"ID Transaksi" )
+		self.Transaksi.SetColLabelValue( 1, u"Tanggal Transaksi" )
+		self.Transaksi.SetColLabelValue( 2, u"ID Barang" )
+		self.Transaksi.SetColLabelValue( 3, u"Jumlah" )
+		self.Transaksi.SetColLabelValue( 4, u"Total" )
+		self.Transaksi.SetColLabelValue( 5, u"Edit" )
+		self.Transaksi.SetColLabelValue( 6, u"Hapus" )
+		self.Transaksi.SetColLabelAlignment( wx.ALIGN_CENTER, wx.ALIGN_CENTER )
 
 		# Rows
-		self.m_grid4.EnableDragRowSize( True )
-		self.m_grid4.SetRowLabelSize( 80 )
-		self.m_grid4.SetRowLabelAlignment( wx.ALIGN_CENTER, wx.ALIGN_CENTER )
+		self.Transaksi.EnableDragRowSize( True )
+		self.Transaksi.SetRowLabelSize( 80 )
+		self.Transaksi.SetRowLabelAlignment( wx.ALIGN_CENTER, wx.ALIGN_CENTER )
 
 		# Label Appearance
 
 		# Cell Defaults
-		self.m_grid4.SetDefaultCellAlignment( wx.ALIGN_LEFT, wx.ALIGN_TOP )
-		bSizer33.Add( self.m_grid4, 1, wx.ALL, 5 )
+		self.Transaksi.SetDefaultCellAlignment( wx.ALIGN_LEFT, wx.ALIGN_TOP )
+		bSizer33.Add( self.Transaksi, 1, wx.ALL, 5 )
 
 		self.m_button29 = wx.Button( self.m_panel33, wx.ID_ANY, u"Tambah", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer33.Add( self.m_button29, 0, wx.ALL, 5 )
@@ -325,45 +325,45 @@ class Dashboard ( wx.Frame ):
 		self.m_panel33.SetSizer( bSizer33 )
 		self.m_panel33.Layout()
 		bSizer33.Fit( self.m_panel33 )
-		self.m_notebook1.AddPage( self.m_panel33, u"Transaksi", True )
+		self.m_notebook1.AddPage( self.m_panel33, u"Transaksi", False )
 		self.m_panel34 = wx.Panel( self.m_notebook1, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer281 = wx.BoxSizer( wx.VERTICAL )
 
-		self.m_grid41 = wx.grid.Grid( self.m_panel34, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.Barang = wx.grid.Grid( self.m_panel34, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
 
 		# Grid
-		self.m_grid41.CreateGrid( 0, 6 )
-		self.m_grid41.EnableEditing( True )
-		self.m_grid41.EnableGridLines( True )
-		self.m_grid41.EnableDragGridSize( False )
-		self.m_grid41.SetMargins( 0, 0 )
+		self.Barang.CreateGrid( 0, 6 )
+		self.Barang.EnableEditing( True )
+		self.Barang.EnableGridLines( True )
+		self.Barang.EnableDragGridSize( False )
+		self.Barang.SetMargins( 0, 0 )
 
 		# Columns
-		self.m_grid41.SetColSize( 0, 100 )
-		self.m_grid41.SetColSize( 1, 150 )
-		self.m_grid41.SetColSize( 2, 100 )
-		self.m_grid41.SetColSize( 3, 100 )
-		self.m_grid41.EnableDragColMove( False )
-		self.m_grid41.EnableDragColSize( True )
-		self.m_grid41.SetColLabelSize( 30 )
-		self.m_grid41.SetColLabelValue( 0, u"ID Barang" )
-		self.m_grid41.SetColLabelValue( 1, u"Nama Barang" )
-		self.m_grid41.SetColLabelValue( 2, u"Jumlah Stok" )
-		self.m_grid41.SetColLabelValue( 3, u"Harga" )
-		self.m_grid41.SetColLabelValue( 4, u"Edit" )
-		self.m_grid41.SetColLabelValue( 5, u"Hapus" )
-		self.m_grid41.SetColLabelAlignment( wx.ALIGN_CENTER, wx.ALIGN_CENTER )
+		self.Barang.SetColSize( 0, 100 )
+		self.Barang.SetColSize( 1, 150 )
+		self.Barang.SetColSize( 2, 100 )
+		self.Barang.SetColSize( 3, 100 )
+		self.Barang.EnableDragColMove( False )
+		self.Barang.EnableDragColSize( True )
+		self.Barang.SetColLabelSize( 30 )
+		self.Barang.SetColLabelValue( 0, u"ID Barang" )
+		self.Barang.SetColLabelValue( 1, u"Nama Barang" )
+		self.Barang.SetColLabelValue( 2, u"Jumlah Stok" )
+		self.Barang.SetColLabelValue( 3, u"Harga" )
+		self.Barang.SetColLabelValue( 4, u"Edit" )
+		self.Barang.SetColLabelValue( 5, u"Hapus" )
+		self.Barang.SetColLabelAlignment( wx.ALIGN_CENTER, wx.ALIGN_CENTER )
 
 		# Rows
-		self.m_grid41.EnableDragRowSize( True )
-		self.m_grid41.SetRowLabelSize( 80 )
-		self.m_grid41.SetRowLabelAlignment( wx.ALIGN_CENTER, wx.ALIGN_CENTER )
+		self.Barang.EnableDragRowSize( True )
+		self.Barang.SetRowLabelSize( 80 )
+		self.Barang.SetRowLabelAlignment( wx.ALIGN_CENTER, wx.ALIGN_CENTER )
 
 		# Label Appearance
 
 		# Cell Defaults
-		self.m_grid41.SetDefaultCellAlignment( wx.ALIGN_LEFT, wx.ALIGN_TOP )
-		bSizer281.Add( self.m_grid41, 1, wx.ALL, 5 )
+		self.Barang.SetDefaultCellAlignment( wx.ALIGN_LEFT, wx.ALIGN_TOP )
+		bSizer281.Add( self.Barang, 1, wx.ALL, 5 )
 
 		self.m_button201 = wx.Button( self.m_panel34, wx.ID_ANY, u"Tambah", wx.DefaultPosition, wx.DefaultSize, 0 )
 		bSizer281.Add( self.m_button201, 0, wx.ALL, 5 )
@@ -382,12 +382,12 @@ class Dashboard ( wx.Frame ):
 		self.m_notebook1.AddPage( self.m_panel35, u"Grafik Transaksi", False )
 		self.m_panel30 = wx.Panel( self.m_notebook1, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		self.m_notebook1.AddPage( self.m_panel30, u"Grafik Stok", False )
-		self.m_panel24 = wx.Panel( self.m_notebook1, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
-		self.m_panel24.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_MENU ) )
+		self.Akun = wx.Panel( self.m_notebook1, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.Akun.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_MENU ) )
 
 		bSizer1 = wx.BoxSizer( wx.VERTICAL )
 
-		self.m_panel1 = wx.Panel( self.m_panel24, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.m_panel1 = wx.Panel( self.Akun, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		self.m_panel1.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_MENU ) )
 
 		bSizer161 = wx.BoxSizer( wx.VERTICAL )
@@ -405,12 +405,12 @@ class Dashboard ( wx.Frame ):
 		bSizer161.Fit( self.m_panel1 )
 		bSizer1.Add( self.m_panel1, 1, wx.EXPAND |wx.ALL, 0 )
 
-		self.m_panel2 = wx.Panel( self.m_panel24, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.m_panel2 = wx.Panel( self.Akun, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		self.m_panel2.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_MENU ) )
 
 		bSizer1.Add( self.m_panel2, 1, wx.EXPAND |wx.ALL, 0 )
 
-		self.m_panel3 = wx.Panel( self.m_panel24, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.m_panel3 = wx.Panel( self.Akun, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		self.m_panel3.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_MENU ) )
 
 		fgSizer2 = wx.FlexGridSizer( 0, 2, 0, 0 )
@@ -422,24 +422,24 @@ class Dashboard ( wx.Frame ):
 
 		fgSizer2.Add( self.m_staticText7, 0, wx.ALL, 5 )
 
-		self.m_textCtrl1 = wx.TextCtrl( self.m_panel3, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		fgSizer2.Add( self.m_textCtrl1, 0, wx.ALL, 5 )
+		self.username_akun = wx.TextCtrl( self.m_panel3, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		fgSizer2.Add( self.username_akun, 0, wx.ALL, 5 )
 
 		self.m_staticText8 = wx.StaticText( self.m_panel3, wx.ID_ANY, u"Password", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText8.Wrap( -1 )
 
 		fgSizer2.Add( self.m_staticText8, 0, wx.ALL, 5 )
 
-		self.m_textCtrl2 = wx.TextCtrl( self.m_panel3, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		fgSizer2.Add( self.m_textCtrl2, 0, wx.ALL, 5 )
+		self.password_akun = wx.TextCtrl( self.m_panel3, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		fgSizer2.Add( self.password_akun, 0, wx.ALL, 5 )
 
 		self.m_staticText9 = wx.StaticText( self.m_panel3, wx.ID_ANY, u"Nama Bisnis/Toko", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText9.Wrap( -1 )
 
 		fgSizer2.Add( self.m_staticText9, 0, wx.ALL, 5 )
 
-		self.m_textCtrl3 = wx.TextCtrl( self.m_panel3, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		fgSizer2.Add( self.m_textCtrl3, 0, wx.ALL, 5 )
+		self.nama_toko = wx.TextCtrl( self.m_panel3, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		fgSizer2.Add( self.nama_toko, 0, wx.ALL, 5 )
 
 
 		self.m_panel3.SetSizer( fgSizer2 )
@@ -447,7 +447,7 @@ class Dashboard ( wx.Frame ):
 		fgSizer2.Fit( self.m_panel3 )
 		bSizer1.Add( self.m_panel3, 3, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 0 )
 
-		self.m_panel21 = wx.Panel( self.m_panel24, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.m_panel21 = wx.Panel( self.Akun, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		self.m_panel21.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_MENU ) )
 
 		bSizer18 = wx.BoxSizer( wx.VERTICAL )
@@ -461,14 +461,14 @@ class Dashboard ( wx.Frame ):
 		bSizer18.Fit( self.m_panel21 )
 		bSizer1.Add( self.m_panel21, 1, wx.EXPAND |wx.ALL, 0 )
 
-		self.m_panel22 = wx.Panel( self.m_panel24, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.m_panel22 = wx.Panel( self.Akun, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer1.Add( self.m_panel22, 1, wx.EXPAND |wx.ALL, 0 )
 
 
-		self.m_panel24.SetSizer( bSizer1 )
-		self.m_panel24.Layout()
-		bSizer1.Fit( self.m_panel24 )
-		self.m_notebook1.AddPage( self.m_panel24, u"Akun", False )
+		self.Akun.SetSizer( bSizer1 )
+		self.Akun.Layout()
+		bSizer1.Fit( self.Akun )
+		self.m_notebook1.AddPage( self.Akun, u"Akun", True )
 
 		bSizer20.Add( self.m_notebook1, 1, wx.EXPAND |wx.ALL, 5 )
 
