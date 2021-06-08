@@ -1,138 +1,204 @@
-import GUI
 import wx
-import wx.grid
-import toko
+from wx.core import FULLSCREEN_ALL, FULL_REPAINT_ON_RESIZE
+import GUI
+import sqlite3
 
-class Daftar (GUI.Daftar):
+class data:
+    def __init__(self):
+        self.con = sqlite3.connect("toko.db")
+        self.cursor = self.con.cursor()
+
+    def executeQuery(self, query, retVal = False):
+        self.cursor.execute(query)
+        all_result = self.cursor.fetchall()
+        self.con.commit()
+        if retVal:
+            return all_result
+
+class daftar(data, GUI.Daftar):
     def __init__(self, parent):
-        GUI.Daftar.__init__(self,parent)
+        GUI.Daftar.__init__(self, parent)
+        self.data = data()
 
-
-
-    def simpan_btn( self, event ):
-        self.akun = toko.akun()
-        listAkun = self.akun.getDataAkun()
-
-        username = self.input_username.GetValue()
-        password = self.input_password.GetValue()
-        namaakun = self.input_toko.GetValue()
-
-        tempakun = []
-        
+    def simpan_btn(self, event):
         msgdlg = wx.MessageDialog(None,"Apakah Anda Yakin?", "konfirmasi", wx.YES_NO | wx.ICON_EXCLAMATION)
         kodedlg = msgdlg.ShowModal()
         if kodedlg == wx.ID_YES:
-            tempakun.append(username)
-            tempakun.append(password)
-            tempakun.append(namaakun)
-            print(listAkun)
+            username = self.input_username.GetValue()
+            password = self.input_password.GetValue()
+            toko = self.input_toko.GetValue()
+            if username != "" and password != "" and toko != "":
+                self.query = f"INSERT INTO akun (username, password, nama_toko) VALUES (\'%s\', \'%s\', \'%s\')"
+                self.query = self.query % (username, password, toko)
+                self.data.executeQuery(self.query, retVal=True)
+                wx.MessageBox('Data telah berhasil disimpan !', 'Berhasil')
+                event = login(parent=None)
+                event.Show()
+                self.Destroy()
+            else:
+                wx.MessageBox('Data tidak boleh kosong !', 'Terjadi kesalahan')
+        else:
+            cancel = wx.MessageDialog(None,"Data Tidak Disimpan", "Data Tidak Disimpan", wx.YES_DEFAULT | wx.ICON_INFORMATION)
+            canceldlg = cancel.ShowModal()
 
+    def masuk_btn( self, event ):
+        event = login(parent=None)
+        event.Show()
+        self.Destroy()
+
+class login(data, GUI.Masuk):
+    def __init__(self, parent):
+        GUI.Masuk.__init__(self, parent)
+        self.data = data()
+
+    def login_btn(self, event):
+        username = self.input_username.GetValue()
+        password = self.input_password.GetValue()
+        self.query = f"SELECT * FROM akun where username = '{username}' and password = '{password}'"
+        result = self.data.executeQuery(self.query, retVal=True)
+        print (result)
+        
+        if len(result) <= 0:
+            wx.MessageBox('Username dan Password salah !', 'Terjadi kesalahan')
+        for row in result:
+            if row[0] == username and row[1] == password:
+                event = dashboard(parent=None)
+                event.ShowFullScreen(show=True, style=FULL_REPAINT_ON_RESIZE)
+                self.Destroy()
+                self.data.con.close()
+
+    def daftar_btn(self, event):
+        event = daftar(parent=None)
+        event.Show()
+        self.Destroy()
+
+class dashboard(data, GUI.Dashboard):
+    def __init__(self, parent):
+        GUI.Dashboard.__init__(self, parent)
+        self.data = data()
+        self.showTransaksi()
+        self.addEditDeleteTransaksi()
+
+    def showTransaksi(self):
+        self.query = 'SELECT * FROM transaksi'
+        result = self.data.executeQuery(self.query, retVal=True)
+        for a in result:
+            self.tabelTansaksi.AppendRows(1)
+        for b in range(5):
+            a = 0
+            for row in result:
+                self.tabelTansaksi.SetCellValue(a, b, str(row[b]))
+                a = a+1
+
+    def addEditDeleteTransaksi(self):
+        jmlKolom = self.tabelTansaksi.GetNumberCols()
+        self.tabelTansaksi.AppendCols(2)
+        colEdit = jmlKolom
+        colDelete = jmlKolom + 1
+
+        self.tabelTansaksi.SetColLabelValue(colEdit, '')
+        self.tabelTansaksi.SetColLabelValue(colDelete, '')
+
+        for row in range(self.tabelTansaksi.GetNumberRows()):
+            self.tabelTansaksi.SetCellValue(row, colEdit, 'Edit')
+            self.tabelTansaksi.SetCellBackgroundColour(row, colEdit, wx.BLUE)
+            self.tabelTansaksi.SetCellTextColour(row, colEdit, wx.WHITE)
+
+            self.tabelTansaksi.SetCellValue(row, colDelete, 'Delete')
+            self.tabelTansaksi.SetCellBackgroundColour(row, colDelete, wx.RED)
+            self.tabelTansaksi.SetCellTextColour(row, colDelete, wx.WHITE)
+
+        self.tabelTansaksi.Fit()
+        self.m_panel33.Layout()
+
+    # def editDeleteTransaksi(self, event):
+    #     baris = event.GetRow()
+    #     kolom = event.GetCol()
+
+    #     print('baris: ', baris)
+    #     print('kolom: ', kolom)
+
+    #     self.query = 'SELECT id_transaksi FROM transaksi'
+    #     result = self.data.executeQuery(self.query, retVal=True)
+        
+    #     if kolom == 6:
+    #         id_person = self.lstIdPerson[baris]
+    #         dlg = dlgInsert(self, id_person)
+    #         nama = self.tabelSiswa.GetCellValue(baris, 0)
+    #         email = self.tabelSiswa.GetCellValue(baris, 1)
+    #         nim = self.tabelSiswa.GetCellValue(baris, 2)
+    #         tahunMasuk = self.tabelSiswa.GetCellValue(baris, 3)
+    #         dlg.isiDataMhs(nama, email, nim, tahunMasuk)
+    #         dlg.ShowModal()
+    #     elif kolom == 7:
+    #         dlg = wx.MessageDialog(
+    #             self, 'Hapus data', 'Informasi', style=wx.YES_NO)
+    #         retval = dlg.ShowModal()
+    #         if retval == wx.ID_YES:
+    #             print('hapus')
+    #             self.mhs.deleteMahasiswa(self.lstIdPerson[baris])
+    #             self.initData()
+    #             self.AddButtonEditDelete()
+
+    def tambahTransaksi(self, event):
+        event = tambahTransaksi(parent=None)
+        event.Show()
+
+class tambahTransaksi(data, GUI.Tambah_Transaksi):
+    def __init__(self, parent):
+        GUI.Tambah_Transaksi.__init__(self, parent)
+
+    def simpan_btn(self, event):
+        msgdlg = wx.MessageDialog(None,"Apakah Anda Yakin?", "konfirmasi", wx.YES_NO | wx.ICON_EXCLAMATION)
+        kodedlg = msgdlg.ShowModal()
+        if kodedlg == wx.ID_YES:
+            idTransaksi = self.inp_id_transaksi.GetValue()
+            tglTransaksi = self.inp_tgl_transaksi.GetValue()
+            idBarang = self.inp_id_barang.GetValue()
+            jmlPembelian = self.inp_jml_pembelian.GetValue()
+            total = self.inp_total.GetValue()
+
+            if idTransaksi != "" and tglTransaksi != "" and idBarang != "" and jmlPembelian != "" and total != "":
+                self.query = f"INSERT INTO transaksi (id_transaksi, tanggal_transaksi, id_barang, jumlah_pembelian, total_pembayaran) VALUES (\'%s\', \'%s\', \'%s\', \'%s\', \'%s\')"
+                self.query = self.query % (idTransaksi, tglTransaksi, idBarang, jmlPembelian, total)
+                self.data.executeQuery(self.query, retVal=True)
+                wx.MessageBox('Data telah berhasil disimpan !', 'Berhasil')
+                self.Destroy()
+            else:
+                wx.MessageBox('Data tidak boleh kosong !', 'Terjadi kesalahan')
+        else:
+            cancel = wx.MessageDialog(None,"Data Tidak Disimpan", "Data Tidak Disimpan", wx.YES_DEFAULT | wx.ICON_INFORMATION)
+            canceldlg = cancel.ShowModal()
+
+class tambahBarang(data, GUI.Tambah_Barang):
+    def __init__(self, parent):
+        GUI.Tambah_Barang.__init__(self, parent)
+
+    def simpan_btn(self, event):
+        msgdlg = wx.MessageDialog(None,"Apakah Anda Yakin?", "konfirmasi", wx.YES_NO | wx.ICON_EXCLAMATION)
+        kodedlg = msgdlg.ShowModal()
+        if kodedlg == wx.ID_YES:
+            idBarang = self.inp_id_barang.GetValue()
+            namaBarang = self.inp_nama_barang.GetValue()
+            jmlStok = self.inp_jml_stok.GetValue()
+            harga = self.inp_harga_barang.GetValue()
+            jenis = self.inp_jenis_barang.GetValue()
+            berat = self.inp_berat.GetValue()
+
+            if idBarang != "" and namaBarang != "" and jmlStok != "" and harga != "" and jenis != "" and berat != "":
+                self.query = f"INSERT INTO barang (id_barang, nama_barang, jumlah_stok, harga, jenis, berat) VALUES (\'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\')"
+                self.query = self.query % (idBarang, namaBarang, jmlStok, harga, jenis, berat)
+                self.data.executeQuery(self.query, retVal=True)
+                wx.MessageBox('Data telah berhasil disimpan !', 'Berhasil')
+                self.Destroy()
+            else:
+                wx.MessageBox('Data tidak boleh kosong !', 'Terjadi kesalahan')
         else:
             cancel = wx.MessageDialog(None,"Data Tidak Disimpan", "Data Tidak Disimpan", wx.YES_DEFAULT | wx.ICON_INFORMATION)
             canceldlg = cancel.ShowModal()
     
-    def masuk_btn( self, event ):
-        framemasuk.Show()
-        framedaftar.Hide()
-
-class Masuk (GUI.Masuk):
-    def __init__(self, parent):
-        GUI.Masuk.__init__(self,parent)
-        self.akun = toko.akun()
-
-
-    def login_btn( self, event ):
-        uname = self.input_username.GetValue()
-        password = self.input_password.GetValue()
-        if uname == 'andrian' and password == 'Andrian123':
-            framedashboard.Show()
-            framemasuk.Hide()
-        
-        else:
-            wrong = wx.MessageDialog(None,"Uername / Password Anda Salah", "Login Gagal", wx.YES_DEFAULT | wx.ICON_INFORMATION)
-            wrongdlg = wrong.ShowModal()
-
-    def daftar_btn( self, event ):
-        framedaftar.Show()
-        framemasuk.Hide()  
-
-class Dashboard(GUI.Dashboard):
-    def __init__(self, parent):
-        GUI.Dashboard.__init__(self,parent)
-        self.showTransaksi()
-        self.showBarang()
-    
-    def showTransaksi(self):
-        n_cols = self.Transaksi.GetNumberCols()
-        n_rows = self.Transaksi.GetNumberRows()
-        if n_cols > 0:
-            self.Transaksi.DeleteCols(0, n_cols, True)
-        if n_rows > 0:
-            self.Transaksi.DeleteRows(0, n_rows, True)
-
-        colums = ['ID Transaksi', 'Tanggal', 'ID Barang', 'Jumlah Beli', 'Total Bayar']
-        self.Transaksi.AppendCols(len(colums))
-
-        self.transaksi = toko.transaksi()
-        listtransaksi = self.transaksi.getDataTransaksi()
-        row = 0
-
-        self.lstTransaksi = []
-        for col in range(len(colums)):
-            self.Transaksi.SetColLabelValue(
-                col, colums[col]) 
-        for transaksi_row in listtransaksi:
-            self.Transaksi.AppendRows(1)
-
-            print(row, '. ', transaksi_row)
-            id_transaksi, tanggal_transaksi, id_barang, jumlah_pembelian, total_pembayaran = transaksi_row
-            jumlahbeli = str(jumlah_pembelian)
-            jumlahbayar = str(total_pembayaran)
-            self.Transaksi.SetCellValue(row, 0, id_transaksi)
-            self.Transaksi.SetCellValue(row, 1, tanggal_transaksi)
-            self.Transaksi.SetCellValue(row, 2, id_barang)
-            self.Transaksi.SetCellValue(row, 3, jumlahbeli)
-            self.Transaksi.SetCellValue(row, 4, jumlahbayar)
-            self.lstTransaksi.append(id_transaksi)
-            row += 1
-
-    def showBarang(self):
-        n_cols = self.Barang.GetNumberCols()
-        n_rows = self.Barang.GetNumberRows()
-        if n_cols > 0:
-            self.Barang.DeleteCols(0, n_cols, True)
-        if n_rows > 0:
-            self.Barang.DeleteRows(0, n_rows, True)
-
-        colums = ['ID Barang', 'Nama Barang', 'Jumlah Stok', 'Harga']
-        self.Barang.AppendCols(len(colums))
-
-        self.barang = toko.barang()
-        listbarang = self.barang.getDataBarang()
-        row = 0
-
-        self.lstBarang = []
-        for col in range(len(colums)):
-            self.Barang.SetColLabelValue(
-                col, colums[col]) 
-        for barang_row in listbarang:
-            self.Barang.AppendRows(1)
-
-            print(row, '. ', barang_row)
-            id_barang, nama_barang, jumlah_stok, harga = barang_row
-            jumlahstk = str(jumlah_stok)
-            hrg = str(harga)
-            self.Barang.SetCellValue(row, 0, id_barang)
-            self.Barang.SetCellValue(row, 1, nama_barang)
-            self.Barang.SetCellValue(row, 2, jumlahstk)
-            self.Barang.SetCellValue(row, 3, hrg)
-            self.lstBarang.append(id_barang)
-            row += 1
 
 app = wx.App()
-framedaftar = Daftar(parent=None)
-framedaftar.Show()
-framemasuk = Masuk(parent=None)
-framedashboard = Dashboard(parent=None)
-
-app.MainLoop()
+frame = daftar(parent=None)
+frame.Show()
+app.MainLoop()    
