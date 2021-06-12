@@ -4,7 +4,6 @@ import GUI
 import sqlite3
 import numpy as np
 import matplotlib
-
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
 
@@ -89,10 +88,21 @@ class dashboard(data, GUI.Dashboard):
         self.showAkun()
 
     def refresh(self):
-        event = dashboard(parent=None, user=True)
+        event = dashboard(parent=None, user=self.user)
         event.ShowFullScreen(show=True, style=FULL_REPAINT_ON_RESIZE)
         self.Destroy()
 
+    def refresh_btn(self, event):
+        event = dashboard(parent=None, user=self.user)
+        event.ShowFullScreen(show=True, style=FULL_REPAINT_ON_RESIZE)
+        self.Destroy()
+
+    def keluar_btn(self, event):
+        self.data.con.close()
+        event = login(parent=None)
+        event.Show()
+        self.Destroy()
+        
     # Dashboard Transaksi
     def showTransaksi(self):
         self.query = 'SELECT * FROM transaksi'
@@ -147,7 +157,7 @@ class dashboard(data, GUI.Dashboard):
                 self.refresh()
 
     def tambahTransaksi(self, event):
-        event = tambahTransaksi(parent=None)
+        event = tambahTransaksi(parent=None, user=self.user)
         event.Show()
 
     def grafikTransaksi(self, event):
@@ -221,12 +231,13 @@ class dashboard(data, GUI.Dashboard):
         self.query = f"SELECT * FROM akun where username = '{self.user}'"
         result = self.data.executeQuery(self.query, retVal=True)
         akun = result[0]
+        print(akun)
         self.akunUsername.SetLabel(akun[0])
         self.akunPassword.SetLabel(akun[1])
         self.akunNamaToko.SetLabel(akun[2])
 
     def editAkun_btn(self, event):
-        event = editAkun(parent=None)
+        event = editAkun(parent=None, user=self.user)
         username = self.akunUsername.GetLabel()
         password = self.akunPassword.GetLabel()
         namatoko = self.akunNamaToko.GetLabel()
@@ -234,9 +245,10 @@ class dashboard(data, GUI.Dashboard):
         event.Show()
 
 class tambahTransaksi(dashboard, GUI.Tambah_Transaksi):
-    def __init__(self, parent):
+    def __init__(self, parent, user):
         GUI.Tambah_Transaksi.__init__(self, parent)
         self.data = data()
+        self.user = user
 
     def simpan_btn(self, event):
         msgdlg = wx.MessageDialog(None,"Apakah Anda Yakin?", "konfirmasi", wx.YES_NO | wx.ICON_EXCLAMATION)
@@ -254,7 +266,6 @@ class tambahTransaksi(dashboard, GUI.Tambah_Transaksi):
                 self.data.executeQuery(self.query, retVal=True)
                 wx.MessageBox('Data telah berhasil disimpan !', 'Berhasil')
                 self.Destroy()
-                self.refresh()
             else:
                 wx.MessageBox('Data tidak boleh kosong !', 'Terjadi kesalahan')
         else:
@@ -284,7 +295,6 @@ class tambahBarang(dashboard, GUI.Tambah_Barang):
                 self.data.executeQuery(self.query, retVal=True)
                 wx.MessageBox('Data telah berhasil disimpan !', 'Berhasil')
                 self.Destroy()
-                self.refresh()
             else:
                 wx.MessageBox('Data tidak boleh kosong !', 'Terjadi kesalahan')
         else:
@@ -424,9 +434,10 @@ class PanelBarang(wx.Panel):
         self.canvas = FigureCanvas(self,1,self.figure)
 
 class editAkun(dashboard, GUI.Edit_Akun):
-    def __init__(self, parent):
+    def __init__(self, parent, user):
         GUI.Edit_Akun.__init__(self,parent) 
         self.data = data()
+        self.user = user
 
     def settext(self, username, password, namatoko):
         self.input_username.SetValue(username)
@@ -446,7 +457,6 @@ class editAkun(dashboard, GUI.Edit_Akun):
                 self.data.executeQuery(self.query, retVal=True)
                 wx.MessageBox('Data telah berhasil disimpan !', 'Berhasil')
                 self.Destroy()
-                self.refresh()
             else:
                 wx.MessageBox('Data tidak boleh kosong !', 'Terjadi kesalahan')
         else:
@@ -454,6 +464,6 @@ class editAkun(dashboard, GUI.Edit_Akun):
             canceldlg = cancel.ShowModal()
 
 app = wx.App()
-frame = daftar(parent=None)
+frame = login(parent=None)
 frame.Show()
 app.MainLoop()    
