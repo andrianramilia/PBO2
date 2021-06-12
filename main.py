@@ -150,11 +150,17 @@ class dashboard(data, GUI.Dashboard):
             event.Show()
 
         elif kolom == 6:
-            idtransaksi = self.tabelTansaksi.GetCellValue(baris, 0)
-            self.query = f"DELETE From Transaksi where id_transaksi = '{idtransaksi}'"
-            self.data.executeQuery(self.query)
-            if idtransaksi != "":
-                self.refresh()
+            msgdlg = wx.MessageDialog(None,"Apakah Anda Yakin?", "konfirmasi", wx.YES_NO | wx.ICON_EXCLAMATION)
+            kodedlg = msgdlg.ShowModal()
+            if kodedlg == wx.ID_YES:
+                idtransaksi = self.tabelTansaksi.GetCellValue(baris, 0)
+                self.query = f"DELETE From Transaksi where id_transaksi = '{idtransaksi}'"
+                self.data.executeQuery(self.query)
+                if idtransaksi != "":
+                    self.refresh()
+            else:
+                cancel = wx.MessageDialog(None,"Data Tidak Dihapus", "Data Tidak Dihapus", wx.YES_DEFAULT | wx.ICON_INFORMATION)
+                canceldlg = cancel.ShowModal()
 
     def tambahTransaksi(self, event):
         event = tambahTransaksi(parent=None, user=self.user)
@@ -216,11 +222,17 @@ class dashboard(data, GUI.Dashboard):
             event.Show()
 
         elif kolom == 7:
-            idbarang = self.tabelBarang.GetCellValue(baris, 0)
-            self.query = f"DELETE From barang where id_barang = '{idbarang}'"
-            self.data.executeQuery(self.query)
-            if idbarang != "":
-                self.refresh()
+            msgdlg = wx.MessageDialog(None,"Apakah Anda Yakin?", "konfirmasi", wx.YES_NO | wx.ICON_EXCLAMATION)
+            kodedlg = msgdlg.ShowModal()
+            if kodedlg == wx.ID_YES:
+                idbarang = self.tabelBarang.GetCellValue(baris, 0)
+                self.query = f"DELETE From barang where id_barang = '{idbarang}'"
+                self.data.executeQuery(self.query)
+                if idbarang != "":
+                    self.refresh()
+            else:
+                cancel = wx.MessageDialog(None,"Data Tidak Dihapus", "Data Tidak Dihapus", wx.YES_DEFAULT | wx.ICON_INFORMATION)
+                canceldlg = cancel.ShowModal()
         
     def tambahBarang(self, event):
         event = tambahBarang(parent=None)
