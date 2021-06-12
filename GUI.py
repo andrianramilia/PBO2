@@ -270,7 +270,7 @@ class Masuk ( wx.Frame ):
 class Dashboard ( wx.Frame ):
 
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 757,476 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 648,342 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 
 		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 
@@ -349,7 +349,7 @@ class Dashboard ( wx.Frame ):
 		self.m_panel33.SetSizer( bSizer30 )
 		self.m_panel33.Layout()
 		bSizer30.Fit( self.m_panel33 )
-		self.m_notebook1.AddPage( self.m_panel33, u"Transaksi", True )
+		self.m_notebook1.AddPage( self.m_panel33, u"Transaksi", False )
 		self.m_panel34 = wx.Panel( self.m_notebook1, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer281 = wx.BoxSizer( wx.VERTICAL )
 
@@ -470,29 +470,47 @@ class Dashboard ( wx.Frame ):
 		fgSizer2.SetFlexibleDirection( wx.BOTH )
 		fgSizer2.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
 
-		self.m_staticText7 = wx.StaticText( self.m_panel3, wx.ID_ANY, u"Username", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText7 = wx.StaticText( self.m_panel3, wx.ID_ANY, u"Username :", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText7.Wrap( -1 )
+
+		self.m_staticText7.SetFont( wx.Font( 12, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial" ) )
 
 		fgSizer2.Add( self.m_staticText7, 0, wx.ALL, 5 )
 
-		self.input_username = wx.TextCtrl( self.m_panel3, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		fgSizer2.Add( self.input_username, 0, wx.ALL, 5 )
+		self.akunUsername = wx.StaticText( self.m_panel3, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.akunUsername.Wrap( -1 )
 
-		self.m_staticText8 = wx.StaticText( self.m_panel3, wx.ID_ANY, u"Password", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.akunUsername.SetFont( wx.Font( 12, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial" ) )
+
+		fgSizer2.Add( self.akunUsername, 0, wx.ALL, 5 )
+
+		self.m_staticText8 = wx.StaticText( self.m_panel3, wx.ID_ANY, u"Password :", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText8.Wrap( -1 )
+
+		self.m_staticText8.SetFont( wx.Font( 12, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial" ) )
 
 		fgSizer2.Add( self.m_staticText8, 0, wx.ALL, 5 )
 
-		self.input_password = wx.TextCtrl( self.m_panel3, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		fgSizer2.Add( self.input_password, 0, wx.ALL, 5 )
+		self.akunPassword = wx.StaticText( self.m_panel3, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.akunPassword.Wrap( -1 )
 
-		self.m_staticText9 = wx.StaticText( self.m_panel3, wx.ID_ANY, u"Nama Bisnis/Toko", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.akunPassword.SetFont( wx.Font( 12, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial" ) )
+
+		fgSizer2.Add( self.akunPassword, 0, wx.ALL, 5 )
+
+		self.m_staticText9 = wx.StaticText( self.m_panel3, wx.ID_ANY, u"Nama Bisnis/Toko :", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText9.Wrap( -1 )
+
+		self.m_staticText9.SetFont( wx.Font( 12, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial" ) )
 
 		fgSizer2.Add( self.m_staticText9, 0, wx.ALL, 5 )
 
-		self.input_toko = wx.TextCtrl( self.m_panel3, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		fgSizer2.Add( self.input_toko, 0, wx.ALL, 5 )
+		self.akunNamaToko = wx.StaticText( self.m_panel3, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.akunNamaToko.Wrap( -1 )
+
+		self.akunNamaToko.SetFont( wx.Font( 12, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial" ) )
+
+		fgSizer2.Add( self.akunNamaToko, 0, wx.ALL, 5 )
 
 
 		self.m_panel3.SetSizer( fgSizer2 )
@@ -521,7 +539,7 @@ class Dashboard ( wx.Frame ):
 		self.Akun.SetSizer( bSizer1 )
 		self.Akun.Layout()
 		bSizer1.Fit( self.Akun )
-		self.m_notebook1.AddPage( self.Akun, u"Akun", False )
+		self.m_notebook1.AddPage( self.Akun, u"Akun", True )
 
 		bSizer20.Add( self.m_notebook1, 1, wx.EXPAND |wx.ALL, 5 )
 
@@ -539,7 +557,7 @@ class Dashboard ( wx.Frame ):
 		self.m_button201.Bind( wx.EVT_BUTTON, self.tambahBarang )
 		self.m_button19.Bind( wx.EVT_BUTTON, self.grafikBarang )
 		self.m_button2.Bind( wx.EVT_BUTTON, self.masuk_btn )
-		self.m_button3.Bind( wx.EVT_BUTTON, self.simpan_btn )
+		self.m_button3.Bind( wx.EVT_BUTTON, self.editAkun_btn )
 
 	def __del__( self ):
 		pass
@@ -567,7 +585,7 @@ class Dashboard ( wx.Frame ):
 	def masuk_btn( self, event ):
 		event.Skip()
 
-	def simpan_btn( self, event ):
+	def editAkun_btn( self, event ):
 		event.Skip()
 
 
@@ -1077,6 +1095,121 @@ class Edit_Barang ( wx.Frame ):
 
 		# Connect Events
 		self.m_button23.Bind( wx.EVT_BUTTON, self.simpan_btn )
+
+	def __del__( self ):
+		pass
+
+
+	# Virtual event handlers, overide them in your derived class
+	def simpan_btn( self, event ):
+		event.Skip()
+
+
+###########################################################################
+## Class Edit_Akun
+###########################################################################
+
+class Edit_Akun ( wx.Frame ):
+
+	def __init__( self, parent ):
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+
+		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
+		self.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_MENU ) )
+
+		bSizer1 = wx.BoxSizer( wx.VERTICAL )
+
+		self.m_panel1 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.m_panel1.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_MENU ) )
+
+		bSizer161 = wx.BoxSizer( wx.VERTICAL )
+
+		self.m_staticText191 = wx.StaticText( self.m_panel1, wx.ID_ANY, u"Update Data Akun", wx.Point( -1,-1 ), wx.Size( -1,-1 ), 0 )
+		self.m_staticText191.Wrap( -1 )
+
+		self.m_staticText191.SetFont( wx.Font( 14, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial" ) )
+
+		bSizer161.Add( self.m_staticText191, 0, wx.ALL, 5 )
+
+
+		self.m_panel1.SetSizer( bSizer161 )
+		self.m_panel1.Layout()
+		bSizer161.Fit( self.m_panel1 )
+		bSizer1.Add( self.m_panel1, 1, wx.EXPAND |wx.ALL, 0 )
+
+		self.m_panel2 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.m_panel2.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_MENU ) )
+
+		bSizer2 = wx.BoxSizer( wx.HORIZONTAL )
+
+
+		self.m_panel2.SetSizer( bSizer2 )
+		self.m_panel2.Layout()
+		bSizer2.Fit( self.m_panel2 )
+		bSizer1.Add( self.m_panel2, 1, wx.EXPAND |wx.ALL, 0 )
+
+		self.m_panel3 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.m_panel3.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_MENU ) )
+
+		fgSizer2 = wx.FlexGridSizer( 0, 2, 0, 0 )
+		fgSizer2.SetFlexibleDirection( wx.BOTH )
+		fgSizer2.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
+
+		self.m_staticText7 = wx.StaticText( self.m_panel3, wx.ID_ANY, u"Username", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText7.Wrap( -1 )
+
+		fgSizer2.Add( self.m_staticText7, 0, wx.ALL, 5 )
+
+		self.input_username = wx.TextCtrl( self.m_panel3, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		fgSizer2.Add( self.input_username, 0, wx.ALL, 5 )
+
+		self.m_staticText8 = wx.StaticText( self.m_panel3, wx.ID_ANY, u"Password", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText8.Wrap( -1 )
+
+		fgSizer2.Add( self.m_staticText8, 0, wx.ALL, 5 )
+
+		self.input_password = wx.TextCtrl( self.m_panel3, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		fgSizer2.Add( self.input_password, 0, wx.ALL, 5 )
+
+		self.m_staticText9 = wx.StaticText( self.m_panel3, wx.ID_ANY, u"Nama Bisnis/Toko", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText9.Wrap( -1 )
+
+		fgSizer2.Add( self.m_staticText9, 0, wx.ALL, 5 )
+
+		self.input_toko = wx.TextCtrl( self.m_panel3, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		fgSizer2.Add( self.input_toko, 0, wx.ALL, 5 )
+
+
+		self.m_panel3.SetSizer( fgSizer2 )
+		self.m_panel3.Layout()
+		fgSizer2.Fit( self.m_panel3 )
+		bSizer1.Add( self.m_panel3, 3, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 0 )
+
+		self.m_panel21 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.m_panel21.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_MENU ) )
+
+		bSizer18 = wx.BoxSizer( wx.VERTICAL )
+
+		self.m_button3 = wx.Button( self.m_panel21, wx.ID_ANY, u"SIMPAN", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer18.Add( self.m_button3, 0, wx.ALIGN_CENTER|wx.ALL, 5 )
+
+
+		self.m_panel21.SetSizer( bSizer18 )
+		self.m_panel21.Layout()
+		bSizer18.Fit( self.m_panel21 )
+		bSizer1.Add( self.m_panel21, 1, wx.EXPAND |wx.ALL, 0 )
+
+		self.m_panel22 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		bSizer1.Add( self.m_panel22, 1, wx.EXPAND |wx.ALL, 0 )
+
+
+		self.SetSizer( bSizer1 )
+		self.Layout()
+
+		self.Centre( wx.BOTH )
+
+		# Connect Events
+		self.m_button3.Bind( wx.EVT_BUTTON, self.simpan_btn )
 
 	def __del__( self ):
 		pass

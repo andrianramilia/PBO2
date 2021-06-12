@@ -67,7 +67,7 @@ class login(data, GUI.Masuk):
             wx.MessageBox('Username dan Password salah !', 'Terjadi kesalahan')
         for row in result:
             if row[0] == username and row[1] == password:
-                event = dashboard(parent=None)
+                event = dashboard(parent=None, user=self.input_username.GetValue())
                 event.ShowFullScreen(show=True, style=FULL_REPAINT_ON_RESIZE)
                 self.Destroy()
                 self.data.con.close()
@@ -78,16 +78,18 @@ class login(data, GUI.Masuk):
         self.Destroy()
 
 class dashboard(data, GUI.Dashboard):
-    def __init__(self, parent):
+    def __init__(self, parent, user):
         GUI.Dashboard.__init__(self, parent)
         self.data = data()
+        self.user = user
         self.showTransaksi()
         self.addEditDeleteTransaksi()
         self.showBarang()
         self.addEditDeleteBarang()
+        self.showAkun()
 
     def refresh(self):
-        event = dashboard(parent=None)
+        event = dashboard(parent=None, user=True)
         event.ShowFullScreen(show=True, style=FULL_REPAINT_ON_RESIZE)
         self.Destroy()
 
@@ -212,6 +214,23 @@ class dashboard(data, GUI.Dashboard):
         
     def tambahBarang(self, event):
         event = tambahBarang(parent=None)
+        event.Show()
+
+    # Dashboard Akun Profil
+    def showAkun(self):
+        self.query = f"SELECT * FROM akun where username = '{self.user}'"
+        result = self.data.executeQuery(self.query, retVal=True)
+        akun = result[0]
+        self.akunUsername.SetLabel(akun[0])
+        self.akunPassword.SetLabel(akun[1])
+        self.akunNamaToko.SetLabel(akun[2])
+
+    def editAkun_btn(self, event):
+        event = editAkun(parent=None)
+        username = self.akunUsername.GetLabel()
+        password = self.akunPassword.GetLabel()
+        namatoko = self.akunNamaToko.GetLabel()
+        event.settext(username, password, namatoko)
         event.Show()
 
 class tambahTransaksi(dashboard, GUI.Tambah_Transaksi):
@@ -404,8 +423,35 @@ class PanelBarang(wx.Panel):
         self.axes.plot(t,s)
         self.canvas = FigureCanvas(self,1,self.figure)
 
+class editAkun(dashboard, GUI.Edit_Akun):
+    def __init__(self, parent):
+        GUI.Edit_Akun.__init__(self,parent) 
+        self.data = data()
 
+    def settext(self, username, password, namatoko):
+        self.input_username.SetValue(username)
+        self.input_password.SetValue(password)
+        self.input_toko.SetValue(namatoko)
 
+    def simpan_btn(self, event):
+        msgdlg = wx.MessageDialog(None,"Apakah Anda Yakin?", "konfirmasi", wx.YES_NO | wx.ICON_EXCLAMATION)
+        kodedlg = msgdlg.ShowModal()
+        if kodedlg == wx.ID_YES:
+            username = self.input_username.GetValue()
+            password = self.input_password.GetValue()
+            toko = self.input_toko.GetValue()
+            if username != "" and password != "" and toko != "":
+                self.query = f"UPDATE akun SET password = \'%s\', nama_toko = \'%s\' WHERE username = \'%s\'"
+                self.query = self.query % (password, toko, username)
+                self.data.executeQuery(self.query, retVal=True)
+                wx.MessageBox('Data telah berhasil disimpan !', 'Berhasil')
+                self.Destroy()
+                self.refresh()
+            else:
+                wx.MessageBox('Data tidak boleh kosong !', 'Terjadi kesalahan')
+        else:
+            cancel = wx.MessageDialog(None,"Data Tidak Disimpan", "Data Tidak Disimpan", wx.YES_DEFAULT | wx.ICON_INFORMATION)
+            canceldlg = cancel.ShowModal()
 
 app = wx.App()
 frame = daftar(parent=None)
